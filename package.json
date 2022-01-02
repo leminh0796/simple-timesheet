@@ -1,19 +1,26 @@
 {
-  "name": "simple-timesheet",
+  "name": "app",
   "private": true,
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
     "@hotwired/turbo-rails": "^7.1.0",
-    "@rails/actioncable": "^6.0.0",
-    "@rails/activestorage": "^6.0.0",
-    "@rails/ujs": "^6.0.0",
-    "@rails/webpacker": "5.4.3",
-    "stimulus": "^3.0.1",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
+    "@rails/activestorage": "^7.0.0",
+    "@rails/ujs": "^7.0.0",
+    "@rails/webpacker": "^6.0.0-rc.6",
+    "webpack": "^5.53.0",
+    "webpack-cli": "^4.8.0"
   },
   "version": "0.1.0",
+  "babel": {
+    "presets": [
+      "./node_modules/@rails/webpacker/package/babel/preset.js"
+    ]
+  },
+  "browserslist": [
+    "defaults"
+  ],
   "devDependencies": {
-    "webpack-dev-server": "^3"
+    "@webpack-cli/serve": "^1.6.0",
+    "webpack-dev-server": "^4.7.2"
   }
 }

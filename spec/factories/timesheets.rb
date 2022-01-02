@@ -12,6 +12,8 @@
 #
 FactoryBot.define do
   factory :timesheet do
-    
+    date { Faker::Date.between(from: 1.month.ago, to: Date.today) }
+    start_time { rand(0..43_219) }
+    finish_time { rand(0..86_439) }
   end
 end

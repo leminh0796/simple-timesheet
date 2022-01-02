@@ -1,7 +1,7 @@
 <%= form_with(model: timesheet) do |form| %>
   <% if timesheet.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(timesheet.errors.count, "error") %> prohibited this timesheet from being saved:</h2>
+      <h2>Oh no there's something wrong :(</h2>
 
       <ul>
         <% timesheet.errors.each do |error| %>
@@ -11,7 +11,24 @@
     </div>
   <% end %>
 
+  <div class='field'>
+    <%= form.label :date %>
+    <%= form.date_field :date, max: Date.today %>
+  </div>
+  <div class='field'>
+    <%= form.label :start_time %>
+    <%= form.number_field :start_hour, in: 0..23, value: 8 %>
+    <span>:</span>
+    <%= form.number_field :start_minutes, in: 0..59, value: 0 %>
+  </div>
+  <div class='field'>
+    <%= form.label :finish_time %>
+    <%= form.number_field :finish_hour, in: 0..23, value: 17 %>
+    <span>:</span>
+    <%= form.number_field :finish_minutes, in: 0..59, value: 0 %>
+  </div>
+
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit 'Create' %>
   </div>
 <% end %>

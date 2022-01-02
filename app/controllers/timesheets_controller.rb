@@ -1,5 +1,5 @@
 class TimesheetsController < ApplicationController
-  before_action :set_timesheet, only: %i[ show edit update destroy ]
+  before_action :set_timesheet, only: %i[show edit update destroy]
 
   # GET /timesheets or /timesheets.json
   def index
@@ -7,8 +7,7 @@ class TimesheetsController < ApplicationController
   end
 
   # GET /timesheets/1 or /timesheets/1.json
-  def show
-  end
+  def show; end
 
   # GET /timesheets/new
   def new
@@ -16,16 +15,14 @@ class TimesheetsController < ApplicationController
   end
 
   # GET /timesheets/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /timesheets or /timesheets.json
   def create
     @timesheet = Timesheet.new(timesheet_params)
-
     respond_to do |format|
       if @timesheet.save
-        format.html { redirect_to timesheet_url(@timesheet), notice: "Timesheet was successfully created." }
+        format.html { redirect_to timesheets_url, notice: 'New timesheet was successfully created.' }
         format.json { render :show, status: :created, location: @timesheet }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +35,7 @@ class TimesheetsController < ApplicationController
   def update
     respond_to do |format|
       if @timesheet.update(timesheet_params)
-        format.html { redirect_to timesheet_url(@timesheet), notice: "Timesheet was successfully updated." }
+        format.html { redirect_to timesheet_url(@timesheet), notice: 'Timesheet was successfully updated.' }
         format.json { render :show, status: :ok, location: @timesheet }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +49,30 @@ class TimesheetsController < ApplicationController
     @timesheet.destroy
 
     respond_to do |format|
-      format.html { redirect_to timesheets_url, notice: "Timesheet was successfully destroyed." }
+      format.html { redirect_to timesheets_url, notice: 'Timesheet was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_timesheet
-      @timesheet = Timesheet.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def timesheet_params
-      params.fetch(:timesheet, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_timesheet
+    @timesheet = Timesheet.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def timesheet_params
+    fetch_params = params.fetch(:timesheet, {}).permit(:date, :start_hour, :start_minutes, :finish_hour, :finish_minutes)
+    fetch_params[:start_time] = time_to_seconds fetch_params.delete(:start_hour), fetch_params.delete(:start_minutes)
+    fetch_params[:finish_time] = time_to_seconds fetch_params.delete(:finish_hour), fetch_params.delete(:finish_minutes)
+
+    fetch_params
+  end
+
+  def time_to_seconds(hour, minute)
+    return unless hour.present? && minute.present?
+
+    "#{hour}:#{minute}".to_time.seconds_since_midnight
+  end
 end

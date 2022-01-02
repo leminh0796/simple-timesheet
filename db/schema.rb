@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_02_062312) do
+ActiveRecord::Schema.define(version: 2022_01_02_121238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,15 @@ ActiveRecord::Schema.define(version: 2022_01_02_062312) do
     t.integer "start_time", default: 0, null: false
     t.integer "finish_time", default: 0, null: false
     t.float "amount", default: 0.0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "weekday_rates", force: :cascade do |t|
+    t.integer "day_of_week", null: false
+    t.integer "start_time", default: 0, null: false
+    t.integer "end_time", default: 0, null: false
+    t.float "rate", default: 0.0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
